@@ -6,7 +6,7 @@ ADD . /app
 WORKDIR /app
 
 RUN pipenv install --dev \
- && pipenv run pipenv_to_requirements -f \
+ && pipenv lock -r > requirements.txt \
  && pipenv run python setup.py bdist_wheel
 
 # ----------------------------------------------------------------------------
@@ -31,9 +31,9 @@ RUN set -xe \
  && rm -rf /root/.cache \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /app \
- && useradd gunicorn --no-create-home --user-group
+ && useradd _uwsgi --no-create-home --user-group
 
-USER gunicorn
+USER _uwsgi
 ADD static /app/static
 
 ENTRYPOINT ["/usr/bin/uwsgi", \
