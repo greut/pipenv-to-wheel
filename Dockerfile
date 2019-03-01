@@ -22,9 +22,9 @@ RUN set -xe \
         python3-minimal \
         python3-wheel \
         python3-pip \
+        gunicorn3 \
  && python3 -m pip install *.whl \
- && python3 -m pip install gunicorn \
- && apt-get remove -y python3-wheel \
+ && apt-get remove -y python3-pip python3-wheel \
  && apt-get autoremove -y \
  && apt-get clean -y \
  && rm -f *.whl \
@@ -37,6 +37,6 @@ USER _gunicorn
 ADD static /app/static
 WORKDIR /app
 
-CMD ["gunicorn", \
+CMD ["gunicorn3", \
      "--bind", "0.0.0.0:8000", \
      "hello_world:app"]
