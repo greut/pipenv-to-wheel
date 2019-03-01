@@ -1,4 +1,5 @@
 CHANGES
 =======
 
+* fix: use pipenv lock -r
 * Initial commit
